@@ -1,0 +1,29 @@
+﻿body {
+    font-family: 'Segoe UI', Calibri, Arial;
+    margin:0;
+    background-color: black;
+    /* background-image: url("../img/bd/orangebg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; */
+
+}
+#levelPanel{
+    display: none;
+}
+.header{
+    width: 100%;
+    background-color: black;
+    color: orange;
+    /* padding: 50px 20px; */
+}
+h2{
+    font-weight:normal;
+    text-align:center;
+    /* background-color: black; */
+}
+h3{
+    font-weight:normal;
+    margin:3px 0px;
+    text-align:center;
+    display: none;
+}

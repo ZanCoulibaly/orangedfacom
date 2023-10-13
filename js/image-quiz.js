@@ -38,7 +38,7 @@ var imagePuzzle = {
                     imagePuzzle.stepCount++;
                     $('.stepCount').text(imagePuzzle.stepCount);
                     $('.timeCount').text(parseInt((now - imagePuzzle.startTime) / 1000, 10));
-                    console.log(now - imagePuzzle.startTime / 1000, 10)
+                    // console.log(now - imagePuzzle.startTime / 1000, 10)
                 }
 
                 imagePuzzle.enableSwapping(this);

@@ -26,3 +26,5 @@
             function rules() {
                 alert('Rearrange the pieces so that you get a sample image. \nThe steps taken are counted');
             }
+
+            

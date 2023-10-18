@@ -1,82 +1,139 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+  <head>
     <title>DFACOM</title>
     <link href="css/style.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="logo.ico" type="image/x-icon" />
     <link href="css/image-quizdfacom.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="collage">
+      <div class="header">
+        <div class="logo">
+          <img
+            src="./img/bd/logo.png"
+            alt=""
+            srcset=""
+            width="100"
+            height="100"
+          />
+        </div>
+      </div>
+      <hr />
+      <div id="playPanel" style="padding: 5px; display: none">
+        <h3 id="imgTitle"></h3>
+        <hr />
+        <div
+          style="
+            display: inline-block;
+            margin: auto;
+            width: 95%;
+            vertical-align: top;
+          "
+        >
+          <ul id="sortable" class="sortable"></ul>
+          <div id="actualImageBox">
+            <div id="stepBox">
+              <div>Clic:</div>
+              <div class="stepCount">0</div>
+            </div>
+            <div id="timeBox">Time: <span id="timerPanel"></span> seconds</div>
+            <img id="actualImage" />
+            <div>Regardez l'image et placé en bonne position.</div>
+            <p id="levelPanel">
+              <!-- <input type="radio" name="level" id="easy" checked="checked" value="3" /> <label for="easy">Easy</label>
+                        <input type="radio" name="level" id="medium" value="4" /> <label for="medium">Medium</label> -->
+              <input
+                type="radio"
+                name="level"
+                id="hard"
+                value="5"
+                checked="checked"
+              />
+              <label for="hard">Hard</label>
+              <!-- <input type="radio" name="level" id="veryhard" value="6" /> <label for="veryhard">Very Hard</label> -->
+            </p>
+            <div>
+              <button id="newPhoto" type="button" class="btns">
+                Actualiser
+              </button>
+              <!-- <button id="btnRule" type="button" class="btn" onclick="rules();">Rules</button>
+                        <button id="newPhoto" type="button" class="btn">Suivant</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="gameOver" style="display: none">
+        <div
+          style="
+            background-color: #ff7900;
+            padding: 5px 10px 20px 10px;
+            text-align: center;
+          "
+        >
+          <h2 style="text-align: center">Jeu terminé !!</h2>
+          Toutes nos félicitations!! <br />
+          Tu as préparé la photo.
+          <br />
+          Clic:
+          <span class="stepCount" id="stepCount" name="stepCount">0</span>
+          vitesses..
+          <br />
+          Temps passé:
+          <span class="timeCount" id="timeCount" name="timeCount">0</span>
+          seconds<br />
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              id="email"
+              class="add"
+            />
+            <input
+              type="tel"
+              placeholder="Numéro Orange Mali"
+              name="tel"
+              id="tel"
+              class="add"
+            />
+            <button
+              id="saveScoreBtn"
+              onclick="saveHighScore(event)"
+              type="button"
+              class="btns2"
+            >
+              Valider
+            </button>
+            <button type="button" onclick="window.location.reload(true);">
+              Joue plus
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBGkGy7DXDWutNDhR3Yt3YOVJuTI4NC2wI",
+        authDomain: "zanquiz-5f6c8.firebaseapp.com",
+        projectId: "zanquiz-5f6c8",
+        storageBucket: "zanquiz-5f6c8.appspot.com",
+        messagingSenderId: "338673702450",
+        appId: "1:338673702450:web:c9368557f48ac12147ce2b",
+        measurementId: "G-CW3H84D6C2",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+    </script>
     <script src="js/jquery-2.1.1.min.js" defer></script>
     <script src="js/jquery-ui.js" defer></script>
     <script src="js/image-quiz.js" defer></script>
+    <script src="jQuery/uuidv4.js" defer></script>
     <script src="quiz.js" defer></script>
-</head>
-<body>
-    <div id="collage">
-       <div class="header">
-        <div class="logo">
-            <img src="./img/bd/logo.png" alt="" srcset="" width="100" height="100">
-        </div>
-       </div>
-        <hr />
-        <div id="playPanel" style="padding:5px;display:none;">
-            <h3 id="imgTitle"></h3> <hr />
-            <div style="display:inline-block; margin:auto; width:95%; vertical-align:top;">
-                <ul id="sortable" class="sortable"></ul>
-                <div id="actualImageBox">
-                    <div id="stepBox">
-                        <div>Clic:</div><div class="stepCount">0</div>
-                    </div>
-                    <div id="timeBox">
-                        Time: <span id="timerPanel"></span> seconds
-                    </div>
-                    <img id="actualImage" />
-                    <div>Regardez l'image et placé en bonne position.</div>
-                    <p id="levelPanel">
-                        <!-- <input type="radio" name="level" id="easy" checked="checked" value="3" /> <label for="easy">Easy</label>
-                        <input type="radio" name="level" id="medium" value="4" /> <label for="medium">Medium</label> -->
-                        <input type="radio" name="level" id="hard" value="5" checked="checked" /> <label for="hard">Hard</label>
-						<!-- <input type="radio" name="level" id="veryhard" value="6" /> <label for="veryhard">Very Hard</label> -->
-                    </p>
-                    <div>
-                        <button id="newPhoto" type="button" class="btns">Actualiser</button>
-                        <!-- <button id="btnRule" type="button" class="btn" onclick="rules();">Rules</button>
-                        <button id="newPhoto" type="button" class="btn">Suivant</button> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="gameOver" style="display:none;">
-            <div style="background-color: #ff7900; padding: 5px 10px 20px 10px; text-align: center; ">
-                <h2 style="text-align:center">Jeu terminé !!</h2>
-                Toutes nos félicitations!! <br /> Tu as préparé la photo.
-                <br />
-                Clic: <span class="stepCount" id="stepCount" name="stepCount">0</span> vitesses..
-                <br />
-                Temps passé: <span class="timeCount" id="timeCount" name="timeCount">0</span> seconds<br />
-                <div>
-                    <button type="button" onclick="window.location.reload(true);">Joue plus</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
-        const firebaseConfig = {
-        apiKey: "AIzaSyDyS4xcnDsm9avL-nP_-Rm7kzHYmRWzoZ4",
-        authDomain: "dfacomuiz.firebaseapp.com",
-        projectId: "dfacomuiz",
-        storageBucket: "dfacomuiz.appspot.com",
-        messagingSenderId: "375347646587",
-        appId: "1:375347646587:web:53baaed23120a01e98d2de",
-        measurementId: "G-JS249TPX93"
-  };
-      
-        // Initialize Firebase
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-      </script>
-</body>
+  </body>
 </html>

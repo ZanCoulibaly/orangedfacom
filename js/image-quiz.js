@@ -1,4 +1,10 @@
-﻿var timerFunction;
+﻿const email = document.getElementById('email');
+const tel = document.getElementById('tel');
+const saveScoreBtn = document.getElementById('saveScoreBtn');
+const StepCount = document.getElementById('stepCount');
+const TimerPanel = localStorage.getItem('timerPanel');
+const dfacom = [];
+var timerFunction;
 
 var imagePuzzle = {
     stepCount: 0,
@@ -33,24 +39,46 @@ var imagePuzzle = {
                 currentList = $('#sortable > li').map(function (i, el) { return $(el).attr('data-value'); });
                 if (isSorted(currentList))
                     $('#actualImageBox').empty().html($('#gameOver').html());
+                    
                 else {
+                    
                     var now = new Date().getTime();
                     imagePuzzle.stepCount++;
-                    $('.stepCount').text(imagePuzzle.stepCount);
-                    $('.timeCount').text(parseInt((now - imagePuzzle.startTime) / 1000, 10));
-                    // console.log(now - imagePuzzle.startTime / 1000, 10)
-                }
+                   $('.stepCount').text(imagePuzzle.stepCount);
+                   $('.timeCount').text(parseInt((now - imagePuzzle.startTime) / 1000, 10));
 
+                  saveHighScore = (e) => {
+                    e.preventDefault();
+                    const id = uuidv4();
+                    const dfa = {
+                        stepCount: imagePuzzle.stepCount,
+                        timeCount: parseInt((now - imagePuzzle.startTime) / 1000, 10),
+                        email: email.value,
+                        phone: tel.value,
+                        id: id
+                    };
+                    console.log(e);
+                    db.collection('dfacom').doc(id).set(dfa).then(() => {
+                        $('.new-todo').val('');
+                        dfacom.push(dfa);
+                        console.log(dfa);
+                         window.location.reload()
+                    }).catch(error => {
+                        console.log('Erreur de registre base', error);
+                    })
+                   
+                }
+                    
+                }
                 imagePuzzle.enableSwapping(this);
                 imagePuzzle.enableSwapping($dragElem);
             }
         });
     },
 
+
     setImage: function (images, gridSize) {
-        console.log(gridSize);
         gridSize = gridSize || 4; // If gridSize is null or not passed, default it as 4.
-        console.log(gridSize);
         var percentage = 100 / (gridSize - 1);
         var image = images[Math.floor(Math.random() * images.length)];
         $('#imgTitle').html(image.title);
